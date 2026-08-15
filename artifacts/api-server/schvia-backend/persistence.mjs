@@ -1,5 +1,4 @@
 import { createPersistence as createJsonPersistence } from "./data-store.mjs";
-import { createPostgresPersistence } from "./postgres-persistence.mjs";
 
 const DEFAULT_MODE = "json";
 
@@ -9,7 +8,7 @@ export function createPersistence(options = {}) {
     return createJsonPersistence(options);
   }
   if (mode === "postgres") {
-    return createPostgresPersistence(options);
+    throw new Error("Postgres persistence is not wired into this service yet. Use PERSISTENCE_MODE=json.");
   }
   throw new Error(`Unsupported PERSISTENCE_MODE: ${mode}. Set PERSISTENCE_MODE=json or PERSISTENCE_MODE=postgres.`);
 }

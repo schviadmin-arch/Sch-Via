@@ -17,6 +17,7 @@ if (isProduction && !process.env.SESSION_SECRET) {
   throw new Error("SESSION_SECRET must be configured in production");
 }
 const loginAttempts = new Map();
+const sessions = new Map();
 const mimeTypes = {
   ".css": "text/css; charset=utf-8",
   ".html": "text/html; charset=utf-8",

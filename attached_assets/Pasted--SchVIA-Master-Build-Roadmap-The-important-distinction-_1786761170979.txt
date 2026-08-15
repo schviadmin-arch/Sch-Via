@@ -1,0 +1,724 @@
+
+# SchVIA — Master Build Roadmap
+
+The important distinction is:
+
+> **We're building the real SchVIA product, but releasing it in controlled MVP scope.**
+
+We're not building a fake throwaway MVP and then rebuilding everything later.
+
+---
+
+## PHASE 0 — Product Constitution & Direction
+
+**Status: 🟢 Established**
+
+We defined the fundamental direction:
+
+* SchVIA = Digital Operating System for Schools
+* Academic Core as the first release
+* PWA-first
+* Offline-first attendance
+* Multi-tenant architecture
+* Free/low-cost infrastructure
+* Founder/platform oversight
+* Production-minded architecture
+* School-first, but architecture capable of expanding later
+
+### Result
+
+We know **what we're building and why**.
+
+---
+
+# PHASE 1 — Existing System Audit
+
+**Status: 🟢 COMPLETE**
+
+We inspected the existing application rather than throwing it away.
+
+We established:
+
+* what already works
+* what doesn't
+* current architecture
+* current persistence
+* authentication
+* authorization
+* attendance
+* tenant isolation
+* tests
+* deployment/runtime assumptions
+* missing production capabilities
+
+### Result
+
+We stopped guessing.
+
+We know what we actually have.
+
+---
+
+# PHASE 2 — Stabilize the Existing Application
+
+**Status: 🟢 COMPLETE**
+
+We established:
+
+* Node project metadata
+* npm scripts
+* reproducible installation
+* test commands
+* persistence boundary
+* safer JSON persistence
+* atomic writes
+* persistence tests
+
+### Result
+
+The existing application became easier to reproduce and modify without randomly breaking it.
+
+---
+
+# PHASE 3 — Architecture & Database Foundation
+
+**Status: 🟢 COMPLETE / 004D IN PROGRESS**
+
+This is where we've spent most of the recent work.
+
+### 004A
+
+Database architecture/design.
+
+We defined:
+
+* users
+* schools
+* memberships
+* classes
+* students
+* guardians
+* attendance
+* academic structures
+* reports
+* audits
+* invitations
+* platform identities
+* tenant boundaries
+
+### 004A.1
+
+Architecture corrections.
+
+We caught things that would have caused problems later:
+
+* platform vs school identity
+* academic core entities
+* stronger tenant integrity
+* parent/guardian relationships
+* attendance synchronization
+* identifier strategy
+
+### 004B
+
+Migration plan.
+
+We answered:
+
+> How do we eventually move the existing data into the new architecture?
+
+### 004C
+
+PostgreSQL foundation.
+
+We actually created:
+
+* PostgreSQL schema
+* migration runner
+* migration tracking
+* database utilities
+* schema validation
+* PostgreSQL dependency
+
+### 004D — CURRENT
+
+**JSON → PostgreSQL migration bridge.**
+
+We're proving that the existing data can actually be translated into the new system.
+
+### Result we're aiming for
+
+A safe path:
+
+```text
+CURRENT SCHVIA
+     │
+     │ JSON
+     ▼
+Migration Layer
+     │
+     │ validated
+     ▼
+PostgreSQL
+```
+
+while the existing application continues working.
+
+---
+
+# PHASE 4 — Production Backend Core
+
+**Status: 🔵 NEXT MAJOR PHASE**
+
+This is where I expect us to **stop endlessly preparing infrastructure** and start turning the foundation into the actual product backend.
+
+We'll determine the exact missions after 004D, but broadly:
+
+### Authentication
+
+* durable sessions
+* password management
+* password recovery
+* secure credential handling
+* invitation acceptance
+* account lifecycle
+
+### Authorization
+
+Move beyond:
+
+```text
+principal
+teacher
+```
+
+toward actual capabilities.
+
+For example:
+
+```text
+Can view students
+Can edit students
+Can take attendance
+Can edit attendance
+Can enter grades
+Can publish results
+Can manage teachers
+Can manage school settings
+```
+
+### Tenant isolation
+
+Make sure:
+
+```text
+School A
+```
+
+can **never** see:
+
+```text
+School B
+```
+
+even through unusual API requests.
+
+### Core backend APIs
+
+Proper APIs for:
+
+* schools
+* users
+* memberships
+* students
+* classes
+* teachers
+* attendance
+* subjects
+* assessments
+* results
+* reports
+
+### Audit system
+
+Real:
+
+> WHO → DID WHAT → TO WHAT → WHEN → IN WHICH SCHOOL
+
+### Result
+
+A backend capable of supporting the actual product.
+
+---
+
+# PHASE 5 — THE ACTUAL SCHVIA FRONTEND
+
+**Status: 🔜 This is where you start seeing the thing you've been waiting for 😂**
+
+This is the big one.
+
+We build the actual experience around the backend instead of creating random screens.
+
+## Principal Workspace
+
+The principal opens SchVIA and immediately understands:
+
+* what is happening
+* attendance today
+* students
+* teachers
+* classes
+* academic performance
+* alerts
+* important actions
+
+The goal you gave me previously:
+
+> **Open SchVIA and understand what's happening within about 3 seconds.**
+
+That's the UX standard.
+
+---
+
+## Teacher Workspace
+
+Teacher opens SchVIA:
+
+```text
+Good morning, John.
+
+Your classes
+JHS 1
+JHS 2
+
+Today's attendance
+JHS 2 — Not taken
+
+Upcoming
+Mathematics assessment
+```
+
+Then:
+
+**Take attendance**
+
+→ select class
+→ students appear
+→ mark present/absent/late
+→ save
+→ sync if offline
+
+---
+
+# PHASE 6 — Academic Core
+
+This is the first **real product MVP**.
+
+### SchVIA Records
+
+* students
+* admissions
+* profiles
+* class placement
+* guardians
+* academic history
+
+### SchVIA Attend
+
+* student attendance
+* teacher attendance where applicable
+* lateness
+* absence
+* offline attendance
+* sync
+* corrections
+* history
+
+### SchVIA Report
+
+* subjects
+* assessments
+* grades
+* grading periods
+* report cards
+* publishing
+* academic history
+
+### Principal Dashboard
+
+Everything connected.
+
+### Teacher Workspace
+
+Everything teachers actually need.
+
+### Parent Portal
+
+Parents can eventually see:
+
+* child profile
+* attendance
+* academic results
+* reports
+* announcements
+
+---
+
+# PHASE 7 — OFFLINE-FIRST HARDENING
+
+**Very important for your target market.**
+
+We don't just put an "offline" badge on it.
+
+We test:
+
+```text
+Internet ON
+    ↓
+Teacher takes attendance
+    ↓
+Internet disappears
+    ↓
+Teacher continues working
+    ↓
+Data safely stored locally
+    ↓
+Internet returns
+    ↓
+Sync
+    ↓
+Server confirms
+```
+
+Then test:
+
+* duplicate sync
+* conflicting edits
+* interrupted sync
+* device refresh
+* browser restart
+* multiple devices
+* poor network
+* long offline periods
+
+This needs to be **genuinely reliable**, especially for schools with weak connectivity.
+
+---
+
+# PHASE 8 — Founder / Platform Command Center
+
+This answers your earlier question directly.
+
+Yes.
+
+**The founder should be able to oversee the ecosystem.**
+
+Not as a god-mode button that bypasses security, but as a proper platform administration layer.
+
+Eventually you should have something like:
+
+```text
+SCHVIA PLATFORM
+
+Schools
+  37
+
+Active users
+  842
+
+Teachers
+  517
+
+Students
+  9,421
+
+Attendance today
+  94%
+
+System health
+  Healthy
+
+Recent activity
+  ...
+```
+
+Then drill into:
+
+```text
+School
+   ↓
+Users
+   ↓
+Teachers
+   ↓
+Students
+   ↓
+Attendance
+   ↓
+Academic activity
+```
+
+And platform-level auditability.
+
+Founder/platform access should be explicitly permissioned and audited.
+
+---
+
+# PHASE 9 — SchVIA Pay
+
+**Important, but not necessarily before the first pilot.**
+
+Fees/finance becomes:
+
+* invoices
+* payments
+* receipts
+* balances
+* outstanding fees
+* payment history
+* financial reporting
+* reminders
+
+This is one of your highest-priority modules commercially.
+
+But we should not let it delay getting the Academic Core into real schools unless pilot feedback says it must.
+
+---
+
+# PHASE 10 — Production Hardening
+
+Before real pilot deployment:
+
+### Security
+
+* authentication security
+* authorization tests
+* tenant isolation tests
+* input validation
+* rate limiting where necessary
+* secure cookies/sessions
+* secret management
+* security headers
+* audit trails
+
+### Reliability
+
+* backups
+* recovery
+* database migrations
+* error handling
+* monitoring
+* health checks
+* logging
+
+### Deployment
+
+* production environment
+* staging environment
+* deployment process
+* rollback process
+* environment configuration
+
+### Data
+
+* migration verification
+* backup/restore
+* data export strategy
+
+---
+
+# PHASE 11 — Pilot Readiness
+
+This is the milestone that matters.
+
+Before approaching schools, SchVIA should be able to handle the following **real workflow**:
+
+```text
+Founder
+   ↓
+Creates school
+   ↓
+Principal receives/inherits access
+   ↓
+Principal sets up school
+   ↓
+Adds teachers
+   ↓
+Creates classes
+   ↓
+Adds students
+   ↓
+Assigns teachers
+   ↓
+Teacher logs in
+   ↓
+Teacher takes attendance
+   ↓
+Offline if necessary
+   ↓
+Attendance syncs
+   ↓
+Teacher enters grades
+   ↓
+Principal reviews
+   ↓
+Report generated
+   ↓
+Parent can eventually view result
+```
+
+If that whole chain works reliably, **we have something worth putting in front of a school.**
+
+---
+
+# PHASE 12 — REAL SCHOOL PILOT
+
+Then we stop theorizing.
+
+We take it to maybe:
+
+**1–3 carefully selected schools first.**
+
+Not 100.
+
+We watch actual people use it.
+
+We learn:
+
+* Where teachers get confused
+* What principals actually care about
+* What they don't use
+* What they ask for
+* What breaks
+* What is too slow
+* What they do manually
+* What they expect automatically
+* What happens when the internet disappears
+* What parents actually want
+
+Then we iterate.
+
+---
+
+# PHASE 13 — Pilot → V1
+
+After the first schools:
+
+```text
+Pilot
+ ↓
+Observe
+ ↓
+Measure
+ ↓
+Fix
+ ↓
+Simplify
+ ↓
+Harden
+ ↓
+Repeat
+```
+
+Then we can expand:
+
+* more schools
+* SchVIA Pay
+* communication
+* deeper reporting
+* analytics
+* more automation
+* stronger parent experience
+
+---
+
+# Where we are RIGHT NOW
+
+Here's the honest picture:
+
+```text
+PRODUCT VISION
+      │
+      ▼
+AUDIT ──────────────── ✅
+      │
+      ▼
+STABILIZATION ──────── ✅
+      │
+      ▼
+ARCHITECTURE ───────── ✅
+      │
+      ▼
+DATABASE FOUNDATION ── ✅
+      │
+      ▼
+004D MIGRATION ─────── 🔵 YOU ARE HERE
+      │
+      ▼
+BACKEND CORE ───────── 🔜
+      │
+      ▼
+FRONTEND / UX ──────── 🔜🔜
+      │
+      ▼
+ACADEMIC CORE ──────── 🔜
+      │
+      ▼
+OFFLINE HARDENING ───── 🔜
+      │
+      ▼
+FOUNDER PLATFORM ────── 🔜
+      │
+      ▼
+PRODUCTION HARDENING ── 🔜
+      │
+      ▼
+PILOT READY ─────────── 🎯
+      │
+      ▼
+1–3 REAL SCHOOLS ────── 🏫
+      │
+      ▼
+LEARN + ITERATE ─────── 🔁
+      │
+      ▼
+SCHVIA V1
+```
+
+## And here's the key thing
+
+**We are not 80% done with the product.**
+
+That would be misleading.
+
+We're probably much closer to:
+
+> **Foundation substantially established; visible product still to be built.**
+
+And that's okay.
+
+Because the alternative was what you experienced before:
+
+> giant prompt → AI starts coding → architecture drifts → fixes create fixes → deployment breaks → endless loop → nobody knows what the hell the product actually became.
+
+We're doing the boring part **once**, deliberately.
+
+Then we get to the fun part.
+
+### Your immediate sequence
+
+**Now:** 004D finishes
+↓
+**You send me its output**
+↓
+**I inspect it**
+↓
+We decide whether 004E is actually needed or whether we can move into the **production backend / product-building phase**
+↓
+Then **frontend begins**
+↓
+You finally start seeing SchVIA become the thing you've been imagining.
+
+And throughout this, **every mission ends with a checkpoint before the next one**.
+
+That's the part that prevents us from returning to the "AI changed 47 things and now nothing works" nightmare.

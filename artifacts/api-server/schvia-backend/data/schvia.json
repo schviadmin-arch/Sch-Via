@@ -1,0 +1,190 @@
+{
+  "school": {
+    "id": "school-northbridge",
+    "name": "Northbridge School",
+    "location": "Accra, Ghana",
+    "term": "2026 / 27 academic year",
+    "createdAt": "2026-08-15T02:34:54.748Z"
+  },
+  "users": [
+    {
+      "id": "user-principal",
+      "name": "Amara Mensah",
+      "email": "amara@northbridge.edu",
+      "role": "principal",
+      "status": "active",
+      "classIds": [],
+      "schoolId": "school-northbridge"
+    },
+    {
+      "id": "user-teacher",
+      "name": "Kofi Owusu",
+      "email": "kofi@northbridge.edu",
+      "role": "teacher",
+      "status": "active",
+      "classIds": [
+        "class-primary-5"
+      ],
+      "schoolId": "school-northbridge"
+    }
+  ],
+  "classes": [
+    {
+      "id": "class-primary-5",
+      "name": "Primary 5",
+      "year": "2026 / 27",
+      "teacherIds": [
+        "user-teacher"
+      ],
+      "schoolId": "school-northbridge"
+    },
+    {
+      "id": "class-primary-6",
+      "name": "Primary 6",
+      "year": "2026 / 27",
+      "teacherIds": [],
+      "schoolId": "school-northbridge"
+    }
+  ],
+  "students": [
+    {
+      "id": "student-ama",
+      "studentId": "NBS-001",
+      "name": "Ama Boateng",
+      "gender": "Female",
+      "classId": "class-primary-5",
+      "guardian": "Adwoa Boateng",
+      "status": "enrolled",
+      "schoolId": "school-northbridge"
+    },
+    {
+      "id": "student-kojo",
+      "studentId": "NBS-002",
+      "name": "Kojo Asante",
+      "gender": "Male",
+      "classId": "class-primary-5",
+      "guardian": "Yaw Asante",
+      "status": "enrolled",
+      "schoolId": "school-northbridge"
+    },
+    {
+      "id": "student-abena",
+      "studentId": "NBS-003",
+      "name": "Abena Owusu",
+      "gender": "Female",
+      "classId": "class-primary-5",
+      "guardian": "Mavis Owusu",
+      "status": "enrolled",
+      "schoolId": "school-northbridge"
+    },
+    {
+      "id": "student-nana",
+      "studentId": "NBS-004",
+      "name": "Nana Mensah",
+      "gender": "Male",
+      "classId": "class-primary-5",
+      "guardian": "Esi Mensah",
+      "status": "enrolled",
+      "schoolId": "school-northbridge"
+    },
+    {
+      "id": "student-yaw",
+      "studentId": "NBS-005",
+      "name": "Yaw Ofori",
+      "gender": "Male",
+      "classId": "class-primary-6",
+      "guardian": "Akosua Ofori",
+      "status": "enrolled",
+      "schoolId": "school-northbridge"
+    }
+  ],
+  "attendance": {
+    "2026-08-15:class-primary-5:student-ama": {
+      "id": "attendance-2026-08-15-class-primary-5-student-ama",
+      "schoolId": "school-northbridge",
+      "date": "2026-08-15",
+      "classId": "class-primary-5",
+      "studentId": "student-ama",
+      "status": "present",
+      "recordedBy": "user-principal",
+      "recordedAt": "2026-08-15T02:35:34.771Z",
+      "updatedAt": "2026-08-15T02:35:34.771Z",
+      "synced": true
+    },
+    "2026-08-15:class-primary-5:student-kojo": {
+      "id": "attendance-2026-08-15-class-primary-5-student-kojo",
+      "schoolId": "school-northbridge",
+      "date": "2026-08-15",
+      "classId": "class-primary-5",
+      "studentId": "student-kojo",
+      "status": "late",
+      "recordedBy": "user-principal",
+      "recordedAt": "2026-08-15T02:35:34.771Z",
+      "updatedAt": "2026-08-15T02:35:34.771Z",
+      "synced": true
+    },
+    "2026-08-15:class-primary-5:student-abena": {
+      "id": "attendance-2026-08-15-class-primary-5-student-abena",
+      "schoolId": "school-northbridge",
+      "date": "2026-08-15",
+      "classId": "class-primary-5",
+      "studentId": "student-abena",
+      "status": "absent",
+      "recordedBy": "user-principal",
+      "recordedAt": "2026-08-15T02:35:34.771Z",
+      "updatedAt": "2026-08-15T02:35:34.772Z",
+      "synced": true
+    },
+    "2026-08-15:class-primary-5:student-nana": {
+      "id": "attendance-2026-08-15-class-primary-5-student-nana",
+      "schoolId": "school-northbridge",
+      "date": "2026-08-15",
+      "classId": "class-primary-5",
+      "studentId": "student-nana",
+      "status": "excused",
+      "recordedBy": "user-principal",
+      "recordedAt": "2026-08-15T02:35:34.772Z",
+      "updatedAt": "2026-08-15T02:35:34.772Z",
+      "synced": true
+    }
+  },
+  "invitations": [],
+  "audit": [
+    {
+      "id": "audit-1786761334772-69b9f3",
+      "actorId": "user-principal",
+      "actorName": "Amara Mensah",
+      "schoolId": "school-northbridge",
+      "action": "Attendance saved",
+      "detail": "4 records · 2026-08-15",
+      "at": "2026-08-15T02:35:34.772Z"
+    }
+  ],
+  "schools": [
+    {
+      "id": "school-northbridge",
+      "name": "Northbridge School",
+      "location": "Accra, Ghana",
+      "term": "2026 / 27 academic year",
+      "createdAt": "2026-08-15T02:34:54.748Z"
+    }
+  ],
+  "memberships": [
+    {
+      "id": "membership-user-principal",
+      "userId": "user-principal",
+      "schoolId": "school-northbridge",
+      "role": "principal",
+      "status": "active",
+      "createdAt": "2026-08-15T02:35:23.726Z"
+    },
+    {
+      "id": "membership-user-teacher",
+      "userId": "user-teacher",
+      "schoolId": "school-northbridge",
+      "role": "teacher",
+      "status": "active",
+      "createdAt": "2026-08-15T02:35:23.726Z"
+    }
+  ]
+}

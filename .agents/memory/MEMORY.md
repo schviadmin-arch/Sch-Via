@@ -1,0 +1,1 @@
+- [Imported backend boundaries](imported-backend-boundaries.md) — copied backend subsets may omit optional database modules; isolate unfinished persistence adapters until dependencies are complete.

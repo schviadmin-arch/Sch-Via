@@ -359,39 +359,6 @@ export function createPostgresPersistence(options = {}) {
       client.release();
     }
   }
-    ensureDatabaseConfigured();
-    const client = await connect();
-    try {
-      await client.query("BEGIN");
-      const schools = schoolRows(data.schools || []);
-      const users = userRows(data.users || []);
-      const credentials = userCredentialRows(data.users || []);
-      const memberships = membershipRows(data.memberships || []);
-      const invitations = invitationRows(data.invitations || []);
-      const audits = auditRows(data.audit || []);
-      const termRows = academicTermRows(data.schools || [], data.classes || []);
-      const classes = classRows(data.classes || [], new Map(termRows.map((term) => [`${term.school_id}:${term.name}`, term.id])));
-      const classTeachers = classTeacherRows(data.classes || []);
-      const students = studentRows(data.students || []);
-
-      await upsertRows(client, "schools", schools);
-      await upsertRows(client, "users", users);
-      await upsertRows(client, "user_credentials", credentials, "user_id");
-      await upsertRows(client, "school_memberships", memberships);
-      await upsertRows(client, "academic_terms", termRows);
-      await upsertRows(client, "classes", classes);
-      await upsertRows(client, "class_teachers", classTeachers);
-      await upsertRows(client, "students", students);
-      await upsertRows(client, "invitations", invitations);
-      await upsertRows(client, "audits", audits);
-      await client.query("COMMIT");
-    } catch (error) {
-      await client.query("ROLLBACK");
-      throw error;
-    } finally {
-      client.release();
-    }
-  }
 
   async function ready() {
     ensureDatabaseConfigured();
