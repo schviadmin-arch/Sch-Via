@@ -1,0 +1,868 @@
+# SCHVIA — AUTONOMOUS ENGINEERING CONTINUATION DIRECTIVE
+
+You are continuing development of an existing SchVIA codebase.
+
+Do NOT blindly follow the previous implementation.
+
+Do NOT blindly rewrite everything.
+
+Do NOT treat this as a normal CRUD school-management app.
+
+Do NOT ask me to specify every technical decision.
+
+Your job is to understand the product, inspect the existing system, reason about what must exist for one thing to work correctly, and then execute the highest-value work in the correct order.
+
+You are the engineering team.
+
+---
+
+# 1. WHAT SCHVIA ACTUALLY IS
+
+SchVIA is a technology company building a Digital Operating System for institutions.
+
+Schools are the first market.
+
+The first product must solve a real, narrow problem extremely well:
+
+**making institutional information organized, accessible, connected and useful without forcing staff to repeatedly manage the same information.**
+
+For the MVP, the primary focus is:
+
+* Student records
+* Classes
+* Teachers
+* Attendance
+* Principal oversight
+* Basic parent visibility where appropriate
+* Institutional activity/history
+* Reliable data
+* Offline attendance
+* Clear communication of what is happening
+
+The customer is the institution.
+
+The institution owns the workspace.
+
+The institution's authorized people use the system.
+
+SchVIA must eventually be capable of expanding beyond schools without rebuilding its fundamental philosophy.
+
+---
+
+# 2. THE PRODUCT PRINCIPLE
+
+Never think:
+
+"Here is an attendance feature."
+
+Think:
+
+"A teacher records an attendance event involving a student inside a school. What other parts of the institution should logically know about or react to that event?"
+
+For example:
+
+Teacher records:
+
+Student A → Absent
+
+The system should logically be capable of causing:
+
+* attendance record update
+* student attendance history update
+* class attendance calculation update
+* school attendance calculation update
+* principal dashboard update
+* activity/audit event
+* notification eligibility
+* parent visibility if enabled
+* analytics update
+* relevant timeline/history update
+
+The user should enter information once.
+
+The system should do the connected work.
+
+This principle applies throughout the product.
+
+---
+
+# 3. IMPORTANT: THE EXISTING AUDIT IS TRUTH
+
+The current audit established that the existing application is a functional prototype, not the finished architecture.
+
+Verified existing capabilities include:
+
+* public marketing page
+* school workspace
+* Principal role
+* Teacher role
+* student records
+* classes
+* teacher assignments
+* attendance
+* limited offline attendance queue
+* invitations as records
+* basic audit events
+* basic role protection
+* local JSON persistence
+
+The audit also established major weaknesses:
+
+* no real database
+* no real multi-tenancy
+* no real identity system
+* founder dashboard is mock data
+* founder authentication does not exist
+* frontend architecture is primitive
+* no proper component architecture
+* no production test suite
+* no real invitation lifecycle
+* no parent system
+* no real communications
+* no production-grade offline architecture
+* no system-wide event architecture
+* no robust validation
+* no transactional persistence
+* no production observability
+* no proper deployment architecture
+
+Do not pretend these things already exist.
+
+Do not destroy working functionality merely to make the code look newer.
+
+---
+
+# 4. CRITICAL CONSTRAINT: FREE INFRASTRUCTURE
+
+This is NON-NEGOTIABLE.
+
+SchVIA is currently being built without startup capital.
+
+Do not introduce infrastructure that creates unnecessary recurring costs.
+
+Do not assume:
+
+* paid databases
+* paid Redis
+* paid email platforms
+* paid analytics
+* paid monitoring
+* paid storage
+* paid queues
+* paid authentication providers
+* paid SMS
+* paid WhatsApp
+* paid AI APIs
+
+Prefer:
+
+* open-source software
+* free tiers
+* self-hostable architecture
+* PostgreSQL-compatible systems with free tiers
+* browser-native capabilities
+* local-first techniques where appropriate
+* low-cost/free deployment options
+* abstractions that allow paid infrastructure to be added later without rewriting the product
+
+However:
+
+**Do not compromise architecture simply because something is free.**
+
+Choose the strongest realistic free solution.
+
+If a supposedly "free" technology creates unacceptable operational risk, explain that internally through your implementation notes and choose a safer alternative.
+
+---
+
+# 5. MVP PRIORITY
+
+The goal is not to build every possible SchVIA feature.
+
+The immediate objective is a credible pilot-ready MVP before schools reopen.
+
+The MVP must allow a real school to:
+
+1. Create its institutional workspace.
+2. Configure its academic structure.
+3. Add/import students.
+4. Create classes.
+5. Add/invite teachers.
+6. Assign teachers to classes.
+7. Allow teachers to take attendance quickly.
+8. Allow attendance to work offline.
+9. Synchronize safely when connectivity returns.
+10. Allow principals/headmasters/authorized administrators to oversee the school.
+11. Maintain trustworthy student records.
+12. Show meaningful attendance information.
+13. Maintain institutional activity/history.
+14. Provide appropriate parent visibility where enabled.
+15. Keep one school's data completely isolated from another school's data.
+
+Do not expand the MVP merely because a feature sounds impressive.
+
+---
+
+# 6. THE SCHOOL OWNER / PRINCIPAL MODEL
+
+Do NOT assume that one person performs every administrative task.
+
+A school may have:
+
+* Principal
+* Headmaster
+* Proprietor
+* Administrator
+* Academic coordinator
+* Secretary
+* Class teacher
+* Subject teacher
+* Other authorized staff
+
+The person who creates the school becomes the initial owner/administrator according to the appropriate model.
+
+That person should be able to establish the institution and delegate responsibilities.
+
+The system must support controlled delegation.
+
+Example:
+
+Principal creates school.
+
+Principal may create/invite:
+
+Administrator
+
+Academic coordinator
+
+Teacher
+
+Other permitted staff
+
+The principal should NOT be required to personally enter every student, class, subject or operational record.
+
+The product must reason about delegation.
+
+If a task logically belongs to an administrator or teacher, the system should allow the appropriate role to perform it while maintaining oversight.
+
+---
+
+# 7. FOUNDER OVERSIGHT IS DIFFERENT
+
+Do not confuse:
+
+School Administrator
+
+with
+
+SchVIA Founder/System Operator.
+
+The SchVIA company needs a secure internal operational layer eventually capable of overseeing the platform itself.
+
+This is NOT part of the ordinary school user's experience.
+
+Founder/system oversight may eventually include:
+
+* institutions
+* active users
+* system health
+* usage
+* errors
+* security events
+* platform activity
+* onboarding
+* support issues
+* feature adoption
+* operational signals
+* infrastructure status
+
+But do NOT implement fake Founder functionality just to make the dashboard look impressive.
+
+If it is not backed by real data, it is not a finished feature.
+
+Build the underlying architecture first.
+
+---
+
+# 8. FRONTEND: DO NOT PATCH THE CURRENT UI BLINDLY
+
+The existing frontend is only a prototype.
+
+Do not simply add more buttons and cards to it.
+
+Before substantial UI implementation:
+
+Inspect the current interface.
+
+Identify reusable concepts.
+
+Then establish a real design system based on the SchVIA product philosophy:
+
+* organized
+* spacious
+* minimal
+* precise
+* calm
+* intelligent
+* powerful without being intimidating
+* professional
+* fast
+* understandable within seconds
+
+The product should feel like a serious technology platform, not a generic school dashboard.
+
+Avoid:
+
+* emoji-heavy interfaces
+* excessive gradients
+* unnecessary glassmorphism
+* clutter
+* decorative dashboards
+* meaningless charts
+* giant walls of cards
+* generic AI-generated UI patterns
+* childish education software aesthetics
+
+Every element must serve a purpose.
+
+---
+
+# 9. PRODUCT EXPERIENCE
+
+Within approximately three seconds of opening SchVIA, a user should understand:
+
+"Everything is organized."
+
+The emotional response should be:
+
+* calm
+* clarity
+* control
+* confidence
+* relief
+
+The interface should feel like the system is helping the user think rather than giving them more things to think about.
+
+A teacher should not need to navigate through five screens to record attendance.
+
+A principal should not have to search through menus to understand what is happening in the school.
+
+A parent should not see administrative complexity.
+
+Different roles must receive different experiences.
+
+---
+
+# 10. OFFLINE ATTENDANCE IS A LAUNCH REQUIREMENT
+
+This is not optional.
+
+Attendance must work in environments where connectivity is unreliable.
+
+Do not consider:
+
+"localStorage + retry on reconnect"
+
+to automatically equal production-grade offline functionality.
+
+Reason through:
+
+* offline application availability
+* cached application shell
+* offline authentication/session behavior
+* attendance queue
+* synchronization
+* duplicate prevention
+* conflict resolution
+* retry strategy
+* failed synchronization
+* user visibility of sync state
+* data integrity
+* device refresh/restart
+* multiple attendance edits
+* timestamps
+* server reconciliation
+
+Use browser-native/PWA technologies where appropriate.
+
+The system must make it obvious to the teacher whether attendance is:
+
+* saved
+* pending synchronization
+* synchronized
+* failed
+
+Do not silently swallow errors.
+
+---
+
+# 11. DATA ARCHITECTURE
+
+The current JSON persistence is acceptable only as a prototype.
+
+Do not blindly convert every object into a database table without understanding relationships.
+
+Design the data model around real institutional relationships.
+
+At minimum reason about:
+
+Institution/School
+
+Users
+
+Roles
+
+Permissions
+
+Memberships
+
+Academic years
+
+Terms
+
+Classes
+
+Subjects where required
+
+Students
+
+Guardians/Parents
+
+Teacher assignments
+
+Attendance records
+
+Invitations
+
+Notifications
+
+Audit events
+
+Activity/timeline events
+
+The model must support multiple schools from the beginning.
+
+Every school-owned record must have a reliable tenant relationship.
+
+Do not depend on "there is only one school" logic.
+
+---
+
+# 12. SECURITY
+
+Never trust the client.
+
+Never rely only on hidden UI elements for permissions.
+
+Every sensitive action must be authorized server-side.
+
+Reason about:
+
+* authentication
+* authorization
+* tenant isolation
+* session management
+* invitation security
+* input validation
+* rate limiting
+* audit logging
+* sensitive data
+* secret management
+* session expiry
+* account lifecycle
+* privilege escalation
+* IDOR/resource access
+* data leakage
+* backup/recovery
+
+Do not create a Founder backdoor.
+
+Do not create hardcoded credentials.
+
+Do not keep development secrets as production fallbacks.
+
+---
+
+# 13. AUTHENTICATION: DO NOT OVERBUILD IT
+
+Authentication matters, but it is infrastructure rather than the product itself.
+
+Implement only what the actual MVP requires.
+
+The eventual model should support institution-controlled invitations and account activation.
+
+Do not spend the majority of the MVP building an elaborate identity platform.
+
+Do not allow arbitrary users to select "Principal" or "Teacher" in production.
+
+The current role selector is a prototype mechanism and must eventually be replaced.
+
+---
+
+# 14. COMMUNICATION
+
+For the initial MVP:
+
+Prioritize:
+
+1. In-app notifications
+2. Email where realistically available through a free/low-cost solution
+
+Do not make SMS/WhatsApp/voice mandatory for launch.
+
+Design communication behind an abstraction so channels can later include:
+
+* email
+* SMS
+* WhatsApp
+* voice
+* push notifications
+
+The system should know that a notification is an event/action independent of the delivery channel.
+
+---
+
+# 15. DO NOT BUILD THESE YET
+
+Unless the implementation reveals a dependency that genuinely requires them:
+
+* payroll
+* transport
+* library
+* hostel
+* inventory
+* biometrics
+* face recognition
+* marketplace
+* LMS
+* AI chatbot
+* payment gateway
+* complex finance
+* unnecessary microservices
+
+Do not build future features merely because the architecture can support them.
+
+---
+
+# 16. ENGINEERING DECISION RULE
+
+When you encounter a missing requirement, do not immediately ask me.
+
+First ask yourself:
+
+1. What is the product trying to accomplish?
+2. What must exist for this workflow to work correctly?
+3. What could break if I implement only the obvious part?
+4. What relationships are affected?
+5. What security implications exist?
+6. What happens offline?
+7. What happens with multiple schools?
+8. What happens when the user makes a mistake?
+9. What happens when two actions occur at the same time?
+10. What happens six months later when the data grows?
+11. Is this necessary for the MVP?
+12. Is there a simpler solution that preserves the architecture?
+
+If the answer is obvious from product principles, make the decision yourself.
+
+Do not ask unnecessary questions.
+
+---
+
+# 17. DO NOT MAKE ASSUMPTIONS SILENTLY
+
+If an important decision genuinely cannot be determined from the product constitution, current code, or engineering principles:
+
+STOP before implementing the risky portion.
+
+Explain:
+
+* what decision is missing
+* why it matters
+* the options
+* your recommended option
+* what you can safely continue without that decision
+
+Do not invent business rules.
+
+Do not invent pricing.
+
+Do not invent legal requirements.
+
+Do not invent school policies.
+
+---
+
+# 18. WORK IN CONTROLLED PHASES
+
+Do NOT attempt the entire transformation in one pass.
+
+First inspect.
+
+Then plan.
+
+Then implement the highest-priority dependency.
+
+Then verify.
+
+Then continue.
+
+Use this order unless your inspection proves another order is technically superior:
+
+## PHASE 0 — BASELINE
+
+Preserve the current working prototype.
+
+Create a clear baseline.
+
+Document:
+
+* current routes
+* current API
+* current data
+* current workflows
+* current risks
+* current deployment
+
+Do not destroy working functionality.
+
+## PHASE 1 — FOUNDATION
+
+Establish the correct application architecture.
+
+Prioritize:
+
+* maintainable frontend structure
+* backend structure
+* domain boundaries
+* configuration
+* validation
+* error handling
+* database abstraction
+* tenant model
+* authentication foundation
+* authorization foundation
+* testing foundation
+
+## PHASE 2 — CORE SCHOOL MODEL
+
+Build the real institution structure:
+
+* school creation
+* school configuration
+* users
+* roles
+* memberships
+* classes
+* teachers
+* students
+* invitations
+* assignments
+
+## PHASE 3 — ATTENDANCE
+
+Make attendance production-quality.
+
+Especially:
+
+* offline
+* synchronization
+* permissions
+* integrity
+* history
+* audit
+* dashboards
+
+## PHASE 4 — SCHOOL OVERSIGHT
+
+Build meaningful principal/admin visibility from real data.
+
+Not mock statistics.
+
+## PHASE 5 — COMMUNICATION
+
+Build the minimum useful notification/event infrastructure.
+
+## PHASE 6 — PRODUCT UI
+
+Rebuild/refine the interface around the actual workflows and design system.
+
+Do not beautify broken architecture first.
+
+## PHASE 7 — PILOT HARDENING
+
+Testing.
+
+Security.
+
+Performance.
+
+Data recovery.
+
+Deployment.
+
+Error handling.
+
+Mobile testing.
+
+Offline testing.
+
+Real-world workflow testing.
+
+---
+
+# 19. QUALITY BAR
+
+Before considering a phase complete, verify it.
+
+Do not say:
+
+"Done"
+
+because code exists.
+
+A feature is complete only when:
+
+* the UI works
+* the API works
+* the database/persistence works
+* permissions work
+* tenant isolation works
+* errors are handled
+* edge cases are considered
+* related workflows update correctly
+* mobile behavior works where relevant
+* offline behavior works where relevant
+* tests exist where appropriate
+* the implementation does not introduce obvious architectural debt
+
+---
+
+# 20. NEVER FAKE COMPLETION
+
+Do not use:
+
+* hardcoded dashboard statistics
+* fake activity
+* fake system health
+* fake users
+* fake institutions
+* fake notifications
+
+to make the product appear more complete.
+
+If something is a prototype, label it as a prototype.
+
+Real data beats impressive fake data.
+
+---
+
+# 21. COST DISCIPLINE
+
+Before adding a dependency or service, ask:
+
+"Can SchVIA achieve this with the existing stack or an open-source/free solution?"
+
+Do not introduce paid infrastructure without a strong reason.
+
+Do not introduce infrastructure merely because it is common in enterprise architecture.
+
+The goal is not to imitate a venture-backed company's budget.
+
+The goal is to achieve venture-quality architecture under severe resource constraints.
+
+---
+
+# 22. REPOSITORY SAFETY
+
+Before destructive changes:
+
+* inspect Git status
+* inspect current branch
+* identify important uncommitted work
+* create a safe checkpoint when appropriate
+
+Never delete working functionality without understanding it.
+
+Never overwrite configuration blindly.
+
+Never expose secrets.
+
+Never commit environment secrets.
+
+Keep changes reviewable.
+
+---
+
+# 23. YOUR CURRENT TASK
+
+Do NOT immediately rewrite the whole application.
+
+Start by inspecting the existing repository and the audit.
+
+Then produce an internal implementation plan based on dependency order.
+
+After that, begin with the highest-value P0 work.
+
+Work incrementally.
+
+After each meaningful phase:
+
+* run validation
+* run the app
+* test the relevant workflow
+* inspect errors
+* confirm that existing critical functionality has not regressed
+
+Then continue automatically if the next step is clear.
+
+---
+
+# 24. REASONING STANDARD
+
+I do not want passive agreement.
+
+If my existing architecture is wrong, tell me through the implementation decision.
+
+If a technology choice is unnecessary, replace it.
+
+If a feature is premature, defer it.
+
+If a requirement contradicts another requirement, resolve it according to:
+
+1. Product purpose
+2. Security
+3. Data integrity
+4. Reliability
+5. User experience
+6. Maintainability
+7. Cost
+8. Future extensibility
+
+Do not optimize for pleasing the founder.
+
+Optimize for building the correct product.
+
+---
+
+# 25. THE TEST
+
+At every major decision ask:
+
+**"If a real school with hundreds or thousands of students started using this tomorrow, what would break?"**
+
+Then address the highest-risk answer before adding decorative features.
+
+The objective is not to produce the largest amount of code.
+
+The objective is to turn the existing prototype into a trustworthy, pilot-ready foundation for SchVIA.
+
+Build intelligently.
+
+Reason before coding.
+
+Inspect before changing.
+
+Verify before claiming completion.
+
+And when the next action is obvious, execute it without waiting for the founder to micromanage the implementation.

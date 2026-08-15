@@ -1,0 +1,9 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "LTSMVX8nbhmEmtiu4ahwg"
+uri = "file://schvia-current.zip"
+type = "unspecified"
+title = "SchVIA current project ZIP"
+description = "Current SchVIA frontend and API/backend handoff source as it exists now."

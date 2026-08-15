@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "SchVIA"
+description = "A school operating system for principals, administrators, teachers, and families, focused on clear school operations, academic records, attendance, and trustworthy oversight."
+version = "1.0.0"
+id = "artifacts/schvia"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25894
+
+[services.development]
+run = "pnpm --filter @workspace/schvia run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/schvia", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/schvia/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25894"
+BASE_PATH = "/"
